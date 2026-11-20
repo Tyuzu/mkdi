@@ -3,43 +3,39 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>{% if pageTitle %}{{ pageTitle }} | My Blog{% else %}My Blog{% endif %}</title>
-        {% if description %}
+        <title>{%- if pageTitle -%}{{ pageTitle }} | My Blog{%- else -%}My Blog{%- endif -%}</title>
+        {%- if description -%}
             <meta name="description" content="{{ description }}">
-        {% endif %}
-
-        {% if styles %}
-            {% if styles.first %}
-                {% for href in styles %}
+        {%- endif -%}
+        {%- if styles -%}
+            {%- if styles.first -%}
+                {%- for href in styles -%}
                     <link rel="stylesheet" href="{{ href }}">
-                {% endfor %}
-            {% else %}
+                {%- endfor -%}
+            {%- else -%}
                 <link rel="stylesheet" href="{{ styles }}">
-            {% endif %}
-        {% endif %}
-
-        {% if scripts %}
-            {% if scripts.first %}
-                {% for src in scripts %}
+            {%- endif -%}
+        {%- endif -%}
+        {%- if scripts -%}
+            {%- if scripts.first -%}
+                {%- for src in scripts -%}
                     <script src="{{ src }}" defer></script>
-                {% endfor %}
-            {% else %}
+                {%- endfor -%}
+            {%- else -%}
                 <script src="{{ scripts }}" defer></script>
-            {% endif %}
-        {% endif %}
-
-        {% if headHtml %}
+            {%- endif -%}
+        {%- endif -%}
+        {%- if headHtml -%}
             {{ headHtml }}
-        {% endif %}
+        {%- endif -%}
     </head>
     <body>
         <nav>
             <a href="/">Home</a>
-            {% for pg in collections.pages %}
+            {%- for pg in collections.pages -%}
                 <a href="{{ pg.url }}">{{ pg.data.navTitle | default: pg.data.pageTitle }}</a>
-            {% endfor %}
+            {%- endfor -%}
         </nav>
-
         <main>
             {{ content }}
         </main>

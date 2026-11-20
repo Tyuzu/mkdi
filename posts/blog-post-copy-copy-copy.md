@@ -1,5 +1,5 @@
 ---
-pageTitle: This is my other Title
+pageTitle: This is my other other other other Title
 subtitle: Notes on Eleventy collections and layouts
 author: Alex
 heroImage: /assets/cover.jpg
