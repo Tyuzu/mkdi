@@ -1,43 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>{%- if pageTitle -%}{{ pageTitle }} | My Blog{%- else -%}My Blog{%- endif -%}</title>
-        {%- if description -%}
-            <meta name="description" content="{{ description }}">
-        {%- endif -%}
-        {%- if styles -%}
-            {%- if styles.first -%}
-                {%- for href in styles -%}
-                    <link rel="stylesheet" href="{{ href }}">
-                {%- endfor -%}
-            {%- else -%}
-                <link rel="stylesheet" href="{{ styles }}">
-            {%- endif -%}
-        {%- endif -%}
-        {%- if scripts -%}
-            {%- if scripts.first -%}
-                {%- for src in scripts -%}
-                    <script src="{{ src }}" defer></script>
-                {%- endfor -%}
-            {%- else -%}
-                <script src="{{ scripts }}" defer></script>
-            {%- endif -%}
-        {%- endif -%}
-        {%- if headHtml -%}
-            {{ headHtml }}
-        {%- endif -%}
+        {%- render 'partials/head.liquid',
+            pageTitle: pageTitle,
+            description: description,
+            styles: styles,
+            scripts: scripts,
+            headHtml: headHtml
+        -%}
     </head>
     <body>
-        <nav>
-            <a href="/">Home</a>
-            {%- for pg in collections.pages -%}
-                <a href="{{ pg.url }}">{{ pg.data.navTitle | default: pg.data.pageTitle }}</a>
-            {%- endfor -%}
-        </nav>
+        {%- render 'partials/header.liquid', pageTitle: pageTitle -%}
+        {%- render 'partials/nav.liquid', pages: collections.pages, currentUrl: page.url -%}
+        {%- render 'partials/sidebar.liquid', tags: tags, url: page.url -%}
         <main>
             {{ content }}
         </main>
+        {%- capture currentYear -%}{{ page.date | date: "%Y" }}{%- endcapture -%}
+        {%- render 'partials/footer.liquid', year: currentYear -%}
     </body>
 </html>

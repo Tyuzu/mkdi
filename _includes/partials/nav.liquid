@@ -1,0 +1,6 @@
+<nav>
+    <a href="/">Home</a>
+    {%- for pg in pages -%}
+        <a href="{{ pg.url }}">{{ pg.data.navTitle | default: pg.data.pageTitle }}</a>
+    {%- endfor -%}
+</nav>

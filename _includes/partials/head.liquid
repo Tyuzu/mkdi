@@ -1,0 +1,27 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{%- if pageTitle -%}{{ pageTitle }} | My Blog{%- else -%}My Blog{%- endif -%}</title>
+{%- if description -%}
+    <meta name="description" content="{{ description }}">
+{%- endif -%}
+{%- if styles -%}
+    {%- if styles.first -%}
+        {%- for href in styles -%}
+            <link rel="stylesheet" href="{{ href }}">
+        {%- endfor -%}
+    {%- else -%}
+        <link rel="stylesheet" href="{{ styles }}">
+    {%- endif -%}
+{%- endif -%}
+{%- if scripts -%}
+    {%- if scripts.first -%}
+        {%- for src in scripts -%}
+            <script src="{{ src }}" defer></script>
+        {%- endfor -%}
+    {%- else -%}
+        <script src="{{ scripts }}" defer></script>
+    {%- endif -%}
+{%- endif -%}
+{%- if headHtml -%}
+    {{ headHtml }}
+{%- endif -%}
