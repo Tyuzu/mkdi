@@ -1,5 +1,12 @@
 ---
 layout: layout.liquid
 ---
-<h1>{{ pageTitle }}</h1>
-{{ content }}
+<article class="page">
+    {% if pageTitle %}
+        <h1>{{ pageTitle }}</h1>
+    {% endif %}
+
+    <div class="page-body">
+        {{ content }}
+    </div>
+</article>

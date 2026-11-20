@@ -2,24 +2,14 @@
 layout: layout.liquid
 ---
 <article class="post">
-    <header class="post-header">
-        {% if heroImage %}
-            <img src="{{ heroImage }}" alt="{{ heroAlt | default: pageTitle }}">
-        {% endif %}
-
-        <h1>{{ pageTitle }}</h1>
-
-        {% if subtitle %}
-            <p class="subtitle">{{ subtitle }}</p>
-        {% endif %}
-
-        <div class="post-meta">
-            <time datetime="{{ page.date | date: '%Y-%m-%d' }}">
-                {{ page.date | date: "%Y-%m-%d" }}
-            </time>
-            {% if author %} · <span>{{ author }}</span>{% endif %}
-        </div>
-    </header>
+    {% render 'partials/post-header.liquid',
+        pageTitle: pageTitle,
+        subtitle: subtitle,
+        author: author,
+        date: page.date,
+        heroImage: heroImage,
+        heroAlt: heroAlt
+    %}
 
     <div class="post-body">
         {{ content }}
