@@ -1,0 +1,61 @@
+{
+  "title": "Grocery",
+  "description": "Notes, guides, seasonal picks, and updates from the site.",
+  "url": "https://example.com",
+  "lang": "en",
+  "buildId": "20261120",
+  "ads": {
+    "pageBanner": {
+      "id": "ad-page-banner",
+      "variant": "banner",
+      "label": "Sponsored",
+      "badge": "Fresh Deal",
+      "title": "Weekly Organic Produce Box",
+      "text": "Farm-picked greens and seasonal fruit delivered to your door.",
+      "ctaLabel": "Shop Now",
+      "url": "https://example.com/produce-box",
+      "desktopImage": "/assets/ads/produce-desktop.jpg",
+      "mobileImage": "/assets/ads/produce-mobile.jpg",
+      "alt": "Assorted organic vegetables and citrus in a crate"
+    },
+    "postInline": {
+      "id": "ad-post-inline",
+      "variant": "inline",
+      "label": "Sponsored",
+      "badge": "Pantry Pick",
+      "title": "Cold-Pressed Olive & Avocado Oils",
+      "text": "Small-batch cooking oils for everyday roasting and dressings.",
+      "ctaLabel": "Explore Oils",
+      "url": "https://example.com/pantry-oils",
+      "desktopImage": "/assets/ads/oils-desktop.jpg",
+      "mobileImage": "/assets/ads/oils-mobile.jpg",
+      "alt": "Glass bottles of cold-pressed olive and avocado oil"
+    },
+    "sidebar": {
+      "id": "ad-sidebar",
+      "variant": "sidebar",
+      "label": "Sponsored",
+      "badge": "Member Perk",
+      "title": "Same-Day Express Delivery",
+      "text": "Free delivery on orders over $50 for members.",
+      "ctaLabel": "Join Free",
+      "url": "https://example.com/delivery-pass",
+      "desktopImage": "/assets/ads/delivery-desktop.jpg",
+      "mobileImage": "/assets/ads/delivery-mobile.jpg",
+      "alt": "Grocery tote bag ready for delivery"
+    },
+    "homeCard": {
+      "id": "ad-home-card",
+      "variant": "card",
+      "label": "Sponsored",
+      "badge": "Seasonal Guide",
+      "title": "Autumn Harvest Meal Prep Bundle",
+      "text": "Five balanced weekly recipes with a one-click ingredient list.",
+      "ctaLabel": "Get Bundle",
+      "url": "https://example.com/harvest-bundle",
+      "desktopImage": "/assets/ads/harvest-desktop.jpg",
+      "mobileImage": "/assets/ads/harvest-mobile.jpg",
+      "alt": "Roasted root vegetables and herbs arranged on a table"
+    }
+  }
+}

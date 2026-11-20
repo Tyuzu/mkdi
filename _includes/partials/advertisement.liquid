@@ -1,0 +1,108 @@
+{%- assign ad_data = ad -%}
+{%- assign ad_variant = variant | default: ad_data.variant | default: 'banner' -%}
+{%- assign ad_label = label | default: ad_data.label | default: 'Sponsored' -%}
+{%- assign ad_title = title | default: ad_data.title -%}
+{%- assign ad_text = text | default: ad_data.text -%}
+{%- assign ad_cta_label = ctaLabel | default: ad_data.ctaLabel | default: ad_data.cta_label -%}
+{%- assign ad_url = url | default: ad_data.url -%}
+{%- assign ad_image = image | default: ad_data.image | default: ad_data.desktopImage -%}
+{%- assign ad_mobile_image = mobileImage | default: ad_data.mobileImage -%}
+{%- assign ad_alt = alt | default: ad_data.alt | default: ad_title | default: 'Advertisement' -%}
+{%- assign ad_badge = badge | default: ad_data.badge -%}
+{%- assign ad_id = id | default: ad_data.id -%}
+
+{%- assign has_content = false -%}
+{%- if ad_title != blank or ad_text != blank or ad_image != blank or ad_mobile_image != blank or ad_cta_label != blank -%}
+  {%- assign has_content = true -%}
+{%- endif -%}
+
+{%- if has_content -%}
+  {%- assign is_external = false -%}
+  {%- if ad_url != blank -%}
+    {%- assign scheme_check = ad_url | slice: 0, 4 | downcase -%}
+    {%- if scheme_check == 'http' -%}
+      {%- assign is_external = true -%}
+    {%- endif -%}
+  {%- endif -%}
+
+  <aside
+    class="ad ad--{{ ad_variant | escape }}"
+    aria-label="{{ ad_label | escape }}"
+    {%- if ad_id != blank %} id="{{ ad_id | escape }}"{% endif -%}
+  >
+    <div class="ad__inner">
+      <div class="ad__header">
+        <span class="ad__label">{{ ad_label | escape }}</span>
+        {%- if ad_badge != blank -%}
+          <span class="ad__badge">{{ ad_badge | escape }}</span>
+        {%- endif -%}
+      </div>
+
+      {%- if ad_image != blank or ad_mobile_image != blank -%}
+        {%- assign fallback_img = ad_image | default: ad_mobile_image -%}
+        <div class="ad__media">
+          {%- if ad_url != blank -%}
+            <a
+              href="{{ ad_url | escape }}"
+              class="ad__media-link"
+              {%- if is_external %} target="_blank" rel="noopener noreferrer sponsored"{% endif -%}
+            >
+          {%- endif -%}
+
+          <picture class="ad__picture">
+            {%- if ad_mobile_image != blank and ad_image != blank -%}
+              <source media="(max-width: 767px)" srcset="{{ ad_mobile_image | escape }}">
+            {%- endif -%}
+            <img
+              src="{{ fallback_img | escape }}"
+              alt="{{ ad_alt | escape }}"
+              class="ad__img"
+              loading="lazy"
+              decoding="async"
+            >
+          </picture>
+
+          {%- if ad_url != blank -%}
+            </a>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      {%- if ad_title != blank or ad_text != blank or ad_cta_label != blank -%}
+        <div class="ad__body">
+          {%- if ad_title != blank -%}
+            <h3 class="ad__title">
+              {%- if ad_url != blank -%}
+                <a
+                  href="{{ ad_url | escape }}"
+                  class="ad__title-link"
+                  {%- if is_external %} target="_blank" rel="noopener noreferrer sponsored"{% endif -%}
+                >
+                  {{ ad_title | escape }}
+                </a>
+              {%- else -%}
+                {{ ad_title | escape }}
+              {%- endif -%}
+            </h3>
+          {%- endif -%}
+
+          {%- if ad_text != blank -%}
+            <p class="ad__text">{{ ad_text | escape }}</p>
+          {%- endif -%}
+
+          {%- if ad_cta_label != blank and ad_url != blank -%}
+            <div class="ad__actions">
+              <a
+                href="{{ ad_url | escape }}"
+                class="ad__cta"
+                {%- if is_external %} target="_blank" rel="noopener noreferrer sponsored"{% endif -%}
+              >
+                {{ ad_cta_label | escape }}
+              </a>
+            </div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </aside>
+{%- endif -%}

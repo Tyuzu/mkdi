@@ -10,6 +10,28 @@ description: Notes, guides, and updates from the site.
   {%- endif -%}
 </section>
 
+{%- assign home_ad = ad | default: site.ads.homeCard -%}
+{%- unless showAd == false -%}
+  {%- if home_ad != blank -%}
+    {%- render 'partials/advertisement.liquid',
+      ad: home_ad,
+      variant: home_ad.variant | default: 'card'
+    -%}
+  {%- else -%}
+    {%- render 'partials/advertisement.liquid',
+      variant: 'card',
+      badge: 'Seasonal Guide',
+      title: 'Autumn Harvest Meal Prep Bundle',
+      text: 'Five balanced weekly recipes with a one-click ingredient list.',
+      ctaLabel: 'Get Bundle',
+      url: 'https://example.com/harvest-bundle',
+      desktopImage: '/assets/ads/harvest-desktop.jpg',
+      mobileImage: '/assets/ads/harvest-mobile.jpg',
+      alt: 'Roasted root vegetables and herbs arranged on a table'
+    -%}
+  {%- endif -%}
+{%- endunless -%}
+
 <section class="home-posts" aria-labelledby="latest-posts-heading">
   <div class="home-posts__header">
     <h2 id="latest-posts-heading">Latest Posts</h2>
@@ -19,7 +41,7 @@ description: Notes, guides, and updates from the site.
   {%- if collections.posts and collections.posts.size > 0 -%}
     <ul class="post-list">
       {%- for post in collections.posts reversed limit: 5 -%}
-        {%- assign post_title = post.data.pageTitle | default: post.data.title -%}
+        {%- assign post_title = post.data.pageTitle | default: post.data.title | default: "Untitled Post" -%}
         <li class="post-list__item">
           <article class="post-card">
             <h3 class="post-card__title">
@@ -40,6 +62,6 @@ description: Notes, guides, and updates from the site.
       {%- endfor -%}
     </ul>
   {%- else -%}
-    <p>No posts published yet.</p>
+    <p class="home-posts__empty">No posts published yet.</p>
   {%- endif -%}
 </section>

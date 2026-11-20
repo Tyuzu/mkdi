@@ -7,6 +7,29 @@ layout: layout.liquid
       <h1>{{ pageTitle | escape }}</h1>
     </header>
   {%- endif -%}
+
+  {%- assign page_ad = ad | default: site.ads.pageBanner -%}
+  {%- unless showAd == false -%}
+    {%- if page_ad != blank -%}
+      {%- render 'partials/advertisement.liquid',
+        ad: page_ad,
+        variant: page_ad.variant | default: 'banner'
+      -%}
+    {%- else -%}
+      {%- render 'partials/advertisement.liquid',
+        variant: 'banner',
+        badge: 'Fresh Deal',
+        title: 'Weekly Organic Produce Box',
+        text: 'Farm-picked greens and seasonal fruit delivered to your door.',
+        ctaLabel: 'Shop Now',
+        url: 'https://example.com/produce-box',
+        desktopImage: '/assets/ads/produce-desktop.jpg',
+        mobileImage: '/assets/ads/produce-mobile.jpg',
+        alt: 'Assorted organic vegetables and citrus in a crate'
+      -%}
+    {%- endif -%}
+  {%- endunless -%}
+
   <div class="page-body">
     {{ content }}
   </div>

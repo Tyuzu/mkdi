@@ -1,46 +1,71 @@
 <!DOCTYPE html>
 <html lang="{{ lang | default: site.lang | default: 'en' }}">
-    <head>
-        {%- assign resolvedTitle = title | default: pageTitle | default: site.title -%}
-        {%- assign resolvedDescription = description | default: excerpt | default: site.description -%}
-        {%- render 'partials/head.liquid',
-            pageTitle: resolvedTitle,
-            description: resolvedDescription,
-            styles: styles,
-            scripts: scripts,
-            headHtml: headHtml,
-            page: page,
-            site: site
-        -%}
-    </head>
-    <body class="layout">
-        <a href="#main-content" class="skip-link">Skip to content</a>
+  <head>
+    {%- assign resolvedTitle = title | default: pageTitle | default: site.title -%}
+    {%- assign resolvedDescription = description | default: excerpt | default: site.description -%}
+    {%- render 'partials/head.liquid',
+      pageTitle: resolvedTitle,
+      description: resolvedDescription,
+      styles: styles,
+      scripts: scripts,
+      headHtml: headHtml,
+      page: page,
+      site: site
+    -%}
+  </head>
+  <body class="layout">
+    <a href="#main-content" class="skip-link">Skip to content</a>
 
-        {%- render 'partials/header.liquid',
-            siteTitle: site.title | default: resolvedTitle,
-            pageTitle: resolvedTitle,
-            pages: collections.pages,
-            currentUrl: page.url,
-            site: site
+    {%- assign headerSiteTitle = site.title | default: resolvedTitle -%}
+    {%- render 'partials/header.liquid',
+      siteTitle: headerSiteTitle,
+      pageTitle: resolvedTitle,
+      pages: collections.pages,
+      currentUrl: page.url,
+      site: site
+    -%}
+
+    <div class="layout__body">
+      <div class="layout__sidebar">
+        {%- render 'partials/sidebar.liquid',
+          tags: tags,
+          collections: collections,
+          url: page.url,
+          page: page
         -%}
 
-        <div class="layout__body">
-            {%- render 'partials/sidebar.liquid',
-                tags: tags,
-                collections: collections,
-                url: page.url,
-                page: page
+        {%- assign sidebar_ad = sidebarAd | default: site.ads.sidebar -%}
+        {%- unless hideSidebarAd == true -%}
+          {%- if sidebar_ad != blank -%}
+            {%- render 'partials/advertisement.liquid',
+              ad: sidebar_ad,
+              variant: sidebar_ad.variant | default: 'sidebar'
             -%}
+          {%- else -%}
+            {%- render 'partials/advertisement.liquid',
+              variant: 'sidebar',
+              badge: 'Member Perk',
+              title: 'Same-Day Express Delivery',
+              text: 'Free delivery on orders over $50 for members.',
+              ctaLabel: 'Join Free',
+              url: 'https://example.com/delivery-pass',
+              desktopImage: '/assets/ads/delivery-desktop.jpg',
+              mobileImage: '/assets/ads/delivery-mobile.jpg',
+              alt: 'Grocery tote bag ready for delivery'
+            -%}
+          {%- endif -%}
+        {%- endunless -%}
+      </div>
 
-            <main id="main-content" class="layout__main" tabindex="-1">
-                {{ content }}
-            </main>
-        </div>
+      <main id="main-content" class="layout__main" tabindex="-1">
+        {{ content }}
+      </main>
+    </div>
 
-        {%- assign currentYear = "now" | date: "%Y" -%}
-        {%- render 'partials/footer.liquid',
-            year: currentYear,
-            site: site
-        -%}
-    </body>
+    {%- assign currentYear = "now" | date: "%Y" -%}
+    {%- render 'partials/footer.liquid',
+      year: currentYear,
+      site: site
+    -%}
+  </body>
 </html>

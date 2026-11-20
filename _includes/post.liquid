@@ -10,7 +10,30 @@ layout: layout.liquid
     heroImage: heroImage,
     heroAlt: heroAlt
   -%}
+
   <div class="post-body">
     {{ content }}
   </div>
+
+  {%- assign post_ad = ad | default: site.ads.postInline -%}
+  {%- unless showAd == false -%}
+    {%- if post_ad != blank -%}
+      {%- render 'partials/advertisement.liquid',
+        ad: post_ad,
+        variant: post_ad.variant | default: 'inline'
+      -%}
+    {%- else -%}
+      {%- render 'partials/advertisement.liquid',
+        variant: 'inline',
+        badge: 'Pantry Pick',
+        title: 'Cold-Pressed Olive & Avocado Oils',
+        text: 'Small-batch cooking oils for everyday roasting and dressings.',
+        ctaLabel: 'Explore Oils',
+        url: 'https://example.com/pantry-oils',
+        desktopImage: '/assets/ads/oils-desktop.jpg',
+        mobileImage: '/assets/ads/oils-mobile.jpg',
+        alt: 'Glass bottles of cold-pressed olive and avocado oil'
+      -%}
+    {%- endif -%}
+  {%- endunless -%}
 </article>
