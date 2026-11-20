@@ -1,5 +1,4 @@
 {
-    "layout": "layout.liquid",
-    "tags": ["pages"],
-    "isPost": false
+    "layout": "page.liquid",
+    "tags": ["pages"]
 }

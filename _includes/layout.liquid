@@ -16,24 +16,6 @@
             {% endfor %}
         </nav>
 
-        {% if isPost %}
-            <header class="post-header">
-                {% if heroImage %}
-                    <img src="{{ heroImage }}" alt="{{ heroAlt | default: pageTitle }}">
-                {% endif %}
-                <h1>{{ pageTitle }}</h1>
-                {% if subtitle %}
-                    <p class="subtitle">{{ subtitle }}</p>
-                {% endif %}
-                <div class="post-meta">
-                    <time datetime="{{ page.date | date: '%Y-%m-%d' }}">{{ page.date | date: "%Y-%m-%d" }}</time>
-                    {% if author %} · <span>{{ author }}</span>{% endif %}
-                </div>
-            </header>
-        {% else %}
-            <h1>{{ pageTitle }}</h1>
-        {% endif %}
-
         <main>
             {{ content }}
         </main>
