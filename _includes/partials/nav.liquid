@@ -1,6 +1,24 @@
-<nav>
-    <a href="/">Home</a>
-    {%- for pg in pages -%}
-        <a href="{{ pg.url }}">{{ pg.data.navTitle | default: pg.data.pageTitle }}</a>
-    {%- endfor -%}
+<nav id="primary-nav" class="primary-nav" aria-label="Main navigation">
+  <div class="navigation">
+    <input class="toggle" type="checkbox" id="more" tabindex="-1">
+    <div class="navigation__inner">
+      <ul class="navigation__list horizontal">
+        <li class="navigation__item" draggable="false">
+          <a href="/" class="navigation__link{% if page.url == '/' %} active{% endif %}">Grocery</a>
+        </li>
+        {%- for pg in pages -%}
+          {%- assign is_active = false -%}
+          {%- if page.url == pg.url -%}
+            {%- assign is_active = true -%}
+          {%- endif -%}
+          <li class="navigation__item" draggable="false">
+            <a href="{{ pg.url }}" class="navigation__link{% if is_active %} active{% endif %}">{{ pg.data.navTitle | default: pg.data.pageTitle }}</a>
+          </li>
+        {%- endfor -%}
+      </ul>
+      <div class="navigation__toggle">
+        <label class="navigation__link" for="more">More</label>
+      </div>
+    </div>
+  </div>
 </nav>

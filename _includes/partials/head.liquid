@@ -4,6 +4,7 @@
 {%- if description -%}
     <meta name="description" content="{{ description }}">
 {%- endif -%}
+{%- render 'partials/styles.liquid' -%}
 {%- if styles -%}
     {%- if styles.first -%}
         {%- for href in styles -%}
