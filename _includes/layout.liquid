@@ -1,22 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ lang | default: site.lang | default: 'en' }}">
     <head>
+        {%- assign resolvedTitle = title | default: pageTitle | default: site.title -%}
+        {%- assign resolvedDescription = description | default: excerpt | default: site.description -%}
         {%- render 'partials/head.liquid',
-            pageTitle: pageTitle,
-            description: description,
+            pageTitle: resolvedTitle,
+            description: resolvedDescription,
             styles: styles,
             scripts: scripts,
-            headHtml: headHtml
+            headHtml: headHtml,
+            page: page,
+            site: site
         -%}
     </head>
-    <body>
-        {%- render 'partials/header.liquid', pageTitle: pageTitle -%}
-        {%- render 'partials/nav.liquid', pages: collections.pages, currentUrl: page.url -%}
-        {%- render 'partials/sidebar.liquid', tags: tags, url: page.url -%}
-        <main>
-            {{ content }}
-        </main>
-        {%- capture currentYear -%}{{ page.date | date: "%Y" }}{%- endcapture -%}
-        {%- render 'partials/footer.liquid', year: currentYear -%}
+    <body class="layout">
+        <a href="#main-content" class="skip-link">Skip to content</a>
+
+        {%- render 'partials/header.liquid',
+            siteTitle: site.title | default: resolvedTitle,
+            pageTitle: resolvedTitle,
+            pages: collections.pages,
+            currentUrl: page.url,
+            site: site
+        -%}
+
+        <div class="layout__body">
+            {%- render 'partials/sidebar.liquid',
+                tags: tags,
+                collections: collections,
+                url: page.url,
+                page: page
+            -%}
+
+            <main id="main-content" class="layout__main" tabindex="-1">
+                {{ content }}
+            </main>
+        </div>
+
+        {%- assign currentYear = "now" | date: "%Y" -%}
+        {%- render 'partials/footer.liquid',
+            year: currentYear,
+            site: site
+        -%}
     </body>
 </html>

@@ -1,3 +1,40 @@
-<footer>
-    <p>&copy; {{ year | default: "2026" }} My Blog</p>
+{%- assign display_year = year | default: "2026" -%}
+{%- assign footer_title = siteTitle | default: site.title | default: "Grocery" -%}
+{%- assign active_url = currentUrl | default: page.url -%}
+
+<footer class="site-footer" role="contentinfo">
+  <div class="site-footer__inner">
+    <div class="site-footer__brand">
+      <a href="/" class="site-footer__title">{{ footer_title | escape }}</a>
+      <p class="site-footer__copy">&copy; {{ display_year }} {{ footer_title | escape }}. All rights reserved.</p>
+    </div>
+
+    {%- if pages != blank and pages.size > 0 -%}
+      <nav class="site-footer__nav" aria-label="Footer navigation">
+        <ul class="site-footer__list">
+          <li>
+            <a
+              href="/"
+              class="site-footer__link"
+              {% if active_url == '/' %}aria-current="page"{% endif %}
+            >Home</a>
+          </li>
+          {%- for pg in pages -%}
+            {%- if pg.url and pg.url != '/' -%}
+              {%- assign link_label = pg.data.navTitle | default: pg.data.pageTitle | default: pg.navTitle | default: pg.title -%}
+              {%- if link_label != blank -%}
+                <li>
+                  <a
+                    href="{{ pg.url | escape }}"
+                    class="site-footer__link"
+                    {% if active_url == pg.url %}aria-current="page"{% endif %}
+                  >{{ link_label | escape }}</a>
+                </li>
+              {%- endif -%}
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      </nav>
+    {%- endif -%}
+  </div>
 </footer>

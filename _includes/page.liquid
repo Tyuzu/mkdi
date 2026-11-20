@@ -2,10 +2,12 @@
 layout: layout.liquid
 ---
 <article class="page">
-    {%- if pageTitle -%}
-        <h1>{{ pageTitle }}</h1>
-    {%- endif -%}
-    <div class="page-body">
-        {{ content }}
-    </div>
+  {%- if pageTitle != blank -%}
+    <header class="page-header">
+      <h1>{{ pageTitle | escape }}</h1>
+    </header>
+  {%- endif -%}
+  <div class="page-body">
+    {{ content }}
+  </div>
 </article>

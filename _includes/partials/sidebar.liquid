@@ -1,1 +1,45 @@
-<aside><span>Hi</span></aside>
+{%- assign active_url = url | default: page.url | default: '/' -%}
+{%- assign ignored_tags = "all,pages,nav,posts" | split: "," -%}
+
+<aside class="sidebar" aria-label="Sidebar navigation">
+  <div class="sidebar__section">
+    <h2 class="sidebar__heading">Categories &amp; Tags</h2>
+
+    {%- if tags != blank and tags.size > 0 -%}
+      <ul class="sidebar__list">
+        <li class="sidebar__item">
+          <a
+            href="/"
+            class="sidebar__link{% if active_url == '/' %} is-active{% endif %}"
+            {% if active_url == '/' %}aria-current="page"{% endif %}
+          >
+            All Items
+          </a>
+        </li>
+
+        {%- for tag in tags -%}
+          {%- unless ignored_tags contains tag -%}
+            {%- assign tag_slug = tag | slugify -%}
+            {%- assign tag_url = '/tags/' | append: tag_slug | append: '/' -%}
+            {%- assign is_active = false -%}
+            {%- if active_url == tag_url -%}
+              {%- assign is_active = true -%}
+            {%- endif -%}
+
+            <li class="sidebar__item">
+              <a
+                href="{{ tag_url | escape }}"
+                class="sidebar__link{% if is_active %} is-active{% endif %}"
+                {% if is_active %}aria-current="page"{% endif %}
+              >
+                <span class="sidebar__tag-hash" aria-hidden="true">#</span>{{ tag | escape }}
+              </a>
+            </li>
+          {%- endunless -%}
+        {%- endfor -%}
+      </ul>
+    {%- else -%}
+      <p class="sidebar__empty">No categories available.</p>
+    {%- endif -%}
+  </div>
+</aside>

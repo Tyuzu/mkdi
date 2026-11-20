@@ -1,24 +1,51 @@
-<nav id="primary-nav" class="primary-nav" aria-label="Main navigation">
-  <div class="navigation">
-    <input class="toggle" type="checkbox" id="more" tabindex="-1">
-    <div class="navigation__inner">
-      <ul class="navigation__list horizontal">
-        <li class="navigation__item" draggable="false">
-          <a href="/" class="navigation__link{% if page.url == '/' %} active{% endif %}">Grocery</a>
-        </li>
-        {%- for pg in pages -%}
+{%- assign active_url = currentUrl | default: page.url | default: '/' -%}
+{%- assign home_label = navHomeLabel | default: "Home" -%}
+
+<div class="navigation">
+  <input class="toggle" type="checkbox" id="nav-more-toggle" aria-hidden="true" tabindex="-1">
+
+  <div class="navigation__inner">
+    <ul class="navigation__list horizontal">
+      <li class="navigation__item">
+        <a
+          href="/"
+          class="navigation__link{% if active_url == '/' %} active{% endif %}"
+          {% if active_url == '/' %}aria-current="page"{% endif %}
+        >
+          {{ home_label | escape }}
+        </a>
+      </li>
+
+      {%- for pg in pages -%}
+        {%- assign pg_url = pg.url -%}
+        {%- if pg_url and pg_url != '/' -%}
           {%- assign is_active = false -%}
-          {%- if page.url == pg.url -%}
+          {%- if active_url == pg_url -%}
             {%- assign is_active = true -%}
           {%- endif -%}
-          <li class="navigation__item" draggable="false">
-            <a href="{{ pg.url }}" class="navigation__link{% if is_active %} active{% endif %}">{{ pg.data.navTitle | default: pg.data.pageTitle }}</a>
-          </li>
-        {%- endfor -%}
-      </ul>
+
+          {%- assign link_label = pg.data.navTitle | default: pg.data.pageTitle | default: pg.navTitle | default: pg.title -%}
+          {%- if link_label != blank -%}
+            <li class="navigation__item">
+              <a
+                href="{{ pg_url | escape }}"
+                class="navigation__link{% if is_active %} active{% endif %}"
+                {% if is_active %}aria-current="page"{% endif %}
+              >
+                {{ link_label | escape }}
+              </a>
+            </li>
+          {%- endif -%}
+        {%- endif -%}
+      {%- endfor -%}
+    </ul>
+
+    {%- if pages != blank and pages.size > 0 -%}
       <div class="navigation__toggle">
-        <label class="navigation__link" for="more">More</label>
+        <label class="navigation__link navigation__more-label" for="nav-more-toggle">
+          More
+        </label>
       </div>
-    </div>
+    {%- endif -%}
   </div>
-</nav>
+</div>

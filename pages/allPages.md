@@ -5,12 +5,13 @@ permalink: /all/
 ---
 Static page content goes here.
 
-{%- for post in collections.pages reversed -%}
+{%- for pg in collections.pages reversed -%}
+  {%- if pg.url != page.url -%}
     <article>
-        <h2><a href="{{ post.url }}">{{ post.data.pageTitle }}</a></h2>
-        <time datetime="{{ post.date | date: '%Y-%m-%d' }}">{{ post.date | date: "%Y-%m-%d" }}</time>
-        {%- if post.data.subtitle -%}
-            <p>{{ post.data.subtitle }}</p>
-        {%- endif -%}
+      <h2><a href="{{ pg.url | escape }}">{{ pg.data.pageTitle | default: pg.data.title | escape }}</a></h2>
+      {%- if pg.data.subtitle != blank -%}
+        <p>{{ pg.data.subtitle | escape }}</p>
+      {%- endif -%}
     </article>
+  {%- endif -%}
 {%- endfor -%}

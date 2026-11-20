@@ -1,1 +1,7 @@
-<link rel="stylesheet" href="/assets/css/style.css">
+{%- assign version_query = "" -%}
+{%- if site.buildId != blank -%}
+  {%- assign version_query = "?v=" | append: site.buildId -%}
+{%- endif -%}
+
+<link rel="preload" href="/assets/css/style.css{{ version_query | escape }}" as="style">
+<link rel="stylesheet" href="/assets/css/style.css{{ version_query | escape }}">

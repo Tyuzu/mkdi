@@ -1,28 +1,62 @@
+{%- assign resolved_site_title = siteTitle | default: site.title | default: "Grocery" -%}
+{%- assign meta_description = description | default: site.description -%}
+{%- assign canonical_path = url | default: page.url -%}
+
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{%- if pageTitle -%}{{ pageTitle }} | My Blog{%- else -%}My Blog{%- endif -%}</title>
-{%- if description -%}
-    <meta name="description" content="{{ description }}">
+
+<title>
+  {%- if pageTitle != blank and pageTitle != resolved_site_title -%}
+    {{ pageTitle | escape }} | {{ resolved_site_title | escape }}
+  {%- else -%}
+    {{ resolved_site_title | escape }}
+  {%- endif -%}
+</title>
+
+{%- if meta_description != blank -%}
+  <meta name="description" content="{{ meta_description | escape }}">
 {%- endif -%}
-{%- render 'partials/styles.liquid' -%}
-{%- if styles -%}
-    {%- if styles.first -%}
-        {%- for href in styles -%}
-            <link rel="stylesheet" href="{{ href }}">
-        {%- endfor -%}
-    {%- else -%}
-        <link rel="stylesheet" href="{{ styles }}">
+
+<meta property="og:type" content="{{ ogType | default: 'website' }}">
+<meta property="og:site_name" content="{{ resolved_site_title | escape }}">
+<meta property="og:title" content="{{ pageTitle | default: resolved_site_title | escape }}">
+{%- if meta_description != blank -%}
+  <meta property="og:description" content="{{ meta_description | escape }}">
+{%- endif -%}
+
+{%- if canonical_path != blank -%}
+  {%- assign full_url = canonical_path -%}
+  {%- if site.url != blank -%}
+    {%- assign base_url = site.url -%}
+    {%- assign last_char = base_url | slice: -1, 1 -%}
+    {%- if last_char == '/' -%}
+      {%- assign base_len = base_url | size | minus: 1 -%}
+      {%- assign base_url = base_url | slice: 0, base_len -%}
     {%- endif -%}
+    {%- assign full_url = base_url | append: canonical_path -%}
+  {%- endif -%}
+  <link rel="canonical" href="{{ full_url | escape }}">
+  <meta property="og:url" content="{{ full_url | escape }}">
 {%- endif -%}
-{%- if scripts -%}
-    {%- if scripts.first -%}
-        {%- for src in scripts -%}
-            <script src="{{ src }}" defer></script>
-        {%- endfor -%}
-    {%- else -%}
-        <script src="{{ scripts }}" defer></script>
+
+{%- render 'partials/styles.liquid', site: site -%}
+
+{%- if styles != blank -%}
+  {%- for href in styles -%}
+    {%- if href != blank -%}
+      <link rel="stylesheet" href="{{ href | escape }}">
     {%- endif -%}
+  {%- endfor -%}
 {%- endif -%}
-{%- if headHtml -%}
-    {{ headHtml }}
+
+{%- if scripts != blank -%}
+  {%- for src in scripts -%}
+    {%- if src != blank -%}
+      <script src="{{ src | escape }}" defer></script>
+    {%- endif -%}
+  {%- endfor -%}
+{%- endif -%}
+
+{%- if headHtml != blank -%}
+  {{ headHtml }}
 {%- endif -%}

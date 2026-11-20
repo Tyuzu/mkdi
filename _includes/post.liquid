@@ -2,14 +2,15 @@
 layout: layout.liquid
 ---
 <article class="post">
-    {%- render 'partials/post-header.liquid',
-        pageTitle: pageTitle,
-        subtitle: subtitle,
-        author: author,
-        date: page.date,
-        heroImage: heroImage,
-        heroAlt: heroAlt
-    -%}
-    <div class="post-body">
-        {{ content }}    </div>
+  {%- render 'partials/post-header.liquid',
+    pageTitle: pageTitle,
+    subtitle: subtitle,
+    author: author,
+    date: page.date,
+    heroImage: heroImage,
+    heroAlt: heroAlt
+  -%}
+  <div class="post-body">
+    {{ content }}
+  </div>
 </article>

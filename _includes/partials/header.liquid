@@ -1,1 +1,41 @@
-<header><span>Hi</span></header>
+{%- assign header_title = siteTitle | default: site.title | default: "Grocery" -%}
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="/" class="site-header__brand">
+      <span class="site-header__title">{{ header_title | escape }}</span>
+    </a>
+
+    <button
+      type="button"
+      class="site-header__toggle"
+      aria-controls="PrimaryNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M3 12h18M3 6h18M3 18h18" stroke-linecap="round"/>
+      </svg>
+    </button>
+
+    <nav id="PrimaryNav" class="site-header__nav" aria-label="Primary navigation">
+      {%- render 'partials/nav.liquid', pages: pages, currentUrl: currentUrl, siteTitle: header_title -%}
+    </nav>
+  </div>
+</header>
+
+<script>
+  (() => {
+    const header = document.currentScript.previousElementSibling;
+    if (!header) return;
+    const toggle = header.querySelector('.site-header__toggle');
+    const nav = header.querySelector('#PrimaryNav');
+    if (!toggle || !nav) return;
+
+    toggle.addEventListener('click', () => {
+      const expanded = toggle.getAttribute('aria-expanded') === 'true';
+      toggle.setAttribute('aria-expanded', String(!expanded));
+      nav.classList.toggle('is-open', !expanded);
+    });
+  })();
+</script>

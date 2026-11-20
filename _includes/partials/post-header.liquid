@@ -1,15 +1,44 @@
+{%- assign heading = pageTitle | default: title -%}
+
 <header class="post-header">
-    {%- if heroImage -%}
-        <img src="{{ heroImage }}" alt="{{ heroAlt | default: pageTitle }}">
-    {%- endif -%}
-    <h1>{{ pageTitle }}</h1>
-    {%- if subtitle -%}
-        <p class="subtitle">{{ subtitle }}</p>
-    {%- endif -%}
-    <div class="post-meta">
-        <time datetime="{{ date | date: '%Y-%m-%d' }}">
-            {{ date | date: "%Y-%m-%d" }}
+  {%- if heading != blank -%}
+    <h1 class="post-header__title">{{ heading | escape }}</h1>
+  {%- endif -%}
+
+  {%- if subtitle != blank -%}
+    <p class="post-header__subtitle">{{ subtitle | escape }}</p>
+  {%- endif -%}
+
+  {%- if author != blank or date != blank -%}
+    <div class="post-header__meta">
+      {%- if author != blank -%}
+        <span class="post-header__author">By {{ author | escape }}</span>
+      {%- endif -%}
+
+      {%- if author != blank and date != blank -%}
+        <span class="post-header__sep" aria-hidden="true">&middot;</span>
+      {%- endif -%}
+
+      {%- if date != blank -%}
+        <time class="post-header__date" datetime="{{ date | date: '%Y-%m-%d' }}">
+          {{ date | date: "%B %d, %Y" }}
         </time>
-        {%- if author -%} · <span>{{ author }}</span>{%- endif -%}
+      {%- endif -%}
     </div>
+  {%- endif -%}
+
+  {%- if heroImage != blank -%}
+    <figure class="post-header__hero">
+      <img
+        src="{{ heroImage | escape }}"
+        alt="{{ heroAlt | default: heading | escape }}"
+        class="post-header__img"
+        loading="eager"
+        decoding="async"
+      >
+      {%- if heroAlt != blank -%}
+        <figcaption class="post-header__caption">{{ heroAlt | escape }}</figcaption>
+      {%- endif -%}
+    </figure>
+  {%- endif -%}
 </header>
