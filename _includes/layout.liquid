@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{% if pageTitle %}{{ pageTitle }} | My Blog{% else %}My Blog{% endif %}</title>
+        {% if description %}
+            <meta name="description" content="{{ description }}">
+        {% endif %}
+    </head>
+    <body>
+        <nav>
+            <a href="/">Home</a>
+            {% for pg in collections.pages %}
+                <a href="{{ pg.url }}">{{ pg.data.navTitle | default: pg.data.pageTitle }}</a>
+            {% endfor %}
+        </nav>
+
+        {% if isPost %}
+            <header class="post-header">
+                {% if heroImage %}
+                    <img src="{{ heroImage }}" alt="{{ heroAlt | default: pageTitle }}">
+                {% endif %}
+                <h1>{{ pageTitle }}</h1>
+                {% if subtitle %}
+                    <p class="subtitle">{{ subtitle }}</p>
+                {% endif %}
+                <div class="post-meta">
+                    <time datetime="{{ page.date | date: '%Y-%m-%d' }}">{{ page.date | date: "%Y-%m-%d" }}</time>
+                    {% if author %} · <span>{{ author }}</span>{% endif %}
+                </div>
+            </header>
+        {% else %}
+            <h1>{{ pageTitle }}</h1>
+        {% endif %}
+
+        <main>
+            {{ content }}
+        </main>
+    </body>
+</html>
